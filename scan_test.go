@@ -68,6 +68,12 @@ const schema2 = `create table item (
 	stuffz blob not null
 )`
 
+const schema3 = `create table men (
+	id   text primary key,
+	name text,
+	age  integer
+)`
+
 var aliceHeight int = 65
 var alice = &Person{
 	Name:      "Alice",
@@ -100,6 +106,9 @@ func setup() {
 		panic("error creating person table: " + err.Error())
 	}
 	if _, err = db.Exec(schema2); err != nil {
+		panic("error creating item table: " + err.Error())
+	}
+	if _, err = db.Exec(schema3); err != nil {
 		panic("error creating item table: " + err.Error())
 	}
 }
@@ -267,28 +276,28 @@ func TestColumnsQuoted(t *testing.T) {
 func TestPrimaryKey(t *testing.T) {
 	p := new(Person)
 	p.ID = 56
-	name, val, err := PrimaryKey(p)
+	pk, err := PrimaryKey(p)
 	if err != nil {
 		t.Errorf("Error getting PrimaryKey: %v", err)
 	}
-	if name != "id" {
-		t.Errorf("Expected pk name to be id, found %s", name)
+	if pk.key != "id" {
+		t.Errorf("Expected pk name to be id, found %s", pk.key)
 	}
-	if val != 56 {
-		t.Errorf("Expected pk value to be 56, found %d", val)
+	if pk.valueInt != 56 {
+		t.Errorf("Expected pk value to be 56, found %d", pk.valueInt)
 	}
 
 	p2 := new(UintPerson)
 	p2.ID = 56
-	name, val, err = PrimaryKey(p2)
+	pk, err = PrimaryKey(p2)
 	if err != nil {
 		t.Errorf("Error getting PrimaryKey: %v", err)
 	}
-	if name != "id" {
-		t.Errorf("Expected pk name to be id, found %s", name)
+	if pk.key != "id" {
+		t.Errorf("Expected pk name to be id, found %s", pk.key)
 	}
-	if val != 56 {
-		t.Errorf("Expected pk value to be 56, found %d", val)
+	if pk.valueInt != 56 {
+		t.Errorf("Expected pk value to be 56, found %d", pk.valueInt)
 	}
 }
 
