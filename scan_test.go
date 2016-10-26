@@ -171,7 +171,7 @@ func personEqual(t *testing.T, elt *Person, ref *Person) {
 		t.Errorf("Person %s Email is %v", ref.Name, elt.Email)
 	}
 	if elt.Ephemeral != ref.Ephemeral {
-		t.Errorf("Person %s Ephemeral is %v", ref.Ephemeral, elt.Ephemeral)
+		t.Errorf("Person %d Ephemeral is %d", ref.Ephemeral, elt.Ephemeral)
 	}
 	if elt.Age != ref.Age {
 		t.Errorf("Person %s Age is %v", ref.Name, elt.Age)
