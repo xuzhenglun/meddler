@@ -212,9 +212,8 @@ func (d *Database) Save(db DB, table string, src interface{}) error {
 
 	if !p.empty() {
 		return d.Update(db, table, src)
-	} else {
-		return d.Insert(db, table, src)
 	}
+	return d.Insert(db, table, src)
 }
 
 // Save using the Default Database type
